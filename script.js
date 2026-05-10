@@ -1,41 +1,37 @@
-function updateSeoulTime() {
+function updateTime() {
     const agora = new Date();
 
-    // Configurações para o Relógio (HH:mm)
-    const optionsTime = {
+    // Relógio de Seul
+    const timeStr = agora.toLocaleTimeString('ko-KR', {
         timeZone: 'Asia/Seoul',
         hour: '2-digit',
         minute: '2-digit',
         hour12: false
-    };
+    });
 
-    // Configurações para a Data em Coreano (igual à imagem)
-    const optionsDate = {
+    // Data de Seul
+    const dateStr = agora.toLocaleDateString('ko-KR', {
         timeZone: 'Asia/Seoul',
         month: 'long',
         day: 'numeric',
         weekday: 'long'
-    };
+    });
 
-    // Formatadores
-    const timeFormatter = new Intl.DateTimeFormat('ko-KR', optionsTime);
-    const dateFormatter = new Intl.DateTimeFormat('ko-KR', optionsDate);
-
-    // Atualiza os elementos no HTML
-    const clockElement = document.getElementById('clock');
-    const dateElement = document.getElementById('date');
-
-    if (clockElement) {
-        clockElement.textContent = timeFormatter.format(agora);
-    }
-    
-    if (dateElement) {
-        dateElement.textContent = dateFormatter.format(agora);
-    }
+    document.getElementById('clock').textContent = timeStr;
+    document.getElementById('date').textContent = dateStr;
 }
 
-// Atualiza a cada segundo
-setInterval(updateSeoulTime, 1000);
+// Alternar Tema
+const btn = document.getElementById('theme-toggle');
+btn.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    
+    // Troca o ícone
+    const icon = btn.querySelector('i');
+    icon.classList.toggle('fa-moon');
+    icon.classList.toggle('fa-sun');
+});
 
-// Executa assim que a página carregar
-window.onload = updateSeoulTime;
+// Iniciar
+setInterval(updateTime, 1000);
+updateTime();
