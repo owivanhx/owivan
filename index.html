@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owiwan Mockup</title>
+    <style>
+        /* Configurações Gerais */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffffff; /* Fundo branco como na imagem */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+        }
+
+        /* Container da "Janela" */
+        .window {
+            width: 500px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+            overflow: hidden;
+            text-align: center;
+            padding-bottom: 20px;
+        }
+
+        /* Barra Superior (Estilo Mac/Navegador) */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            background-color: #fafafa;
+        }
+
+        .dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+
+        .search-bar {
+            background: #eee;
+            margin: 0 auto;
+            padding: 4px 15px;
+            border-radius: 5px;
+            font-size: 12px;
+            color: #666;
+            width: 50%;
+        }
+
+        /* Conteúdo Central */
+        .clock {
+            font-size: 64px;
+            margin-top: 40px;
+            font-weight: 300;
+        }
+
+        .date {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 40px;
+        }
+
+        /* Ícones/Links */
+        .links-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #555;
+            font-size: 12px;
+        }
+
+        .circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #e0e0e0; /* Cor de fundo caso não tenha imagem */
+            margin-bottom: 8px;
+            border: 1px solid #ddd;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Rodapé Carrd */
+        .footer-badge {
+            display: inline-block;
+            background: #ccc;
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            text-transform: lowercase;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="window">
+        <div class="top-bar">
+            <div class="dots">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+            </div>
+            <div class="search-bar">www.owiwan.com</div>
+        </div>
+
+        <div class="clock">21:00</div>
+        <div class="date">8월 16일 화요일</div>
+
+        <div class="links-container">
+            <a href="#" class="item">
+                <div class="circle"></div>
+                <span>about</span>
+            </a>
+            <a href="#" class="item">
+                <div class="circle"></div>
+                <span>likes</span>
+            </a>
+            <a href="#" class="item">
+                <div class="circle"></div>
+                <span>...</span>
+            </a>
+            <a href="#" class="item">
+                <div class="circle"></div>
+                <span>social medias</span>
+            </a>
+        </div>
+
+        <div class="footer-badge">made with carrd</div>
+    </div>
+
+</body>
+</html>
