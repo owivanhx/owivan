@@ -36,8 +36,10 @@ btn.addEventListener('click', () => {
 setInterval(updateTime, 1000);
 updateTime();
 
-const themeBtn = document.getElementById('theme-toggle');
-const body = document.body;
+const btn = document.getElementById('theme-toggle');
+btn.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+});
 
 themeBtn.addEventListener('click', () => {
     // Alterna a classe dark-mode no body
