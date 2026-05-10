@@ -35,3 +35,29 @@ btn.addEventListener('click', () => {
 // Iniciar
 setInterval(updateTime, 1000);
 updateTime();
+
+const themeBtn = document.getElementById('theme-toggle');
+const body = document.body;
+
+themeBtn.addEventListener('click', () => {
+    // Alterna a classe dark-mode no body
+    body.classList.toggle('dark-mode');
+    
+    // Troca o ícone (Lua para Sol)
+    const icon = themeBtn.querySelector('i');
+    if (body.classList.contains('dark-mode')) {
+        icon.classList.replace('fa-moon', 'fa-sun');
+    } else {
+        icon.classList.replace('fa-sun', 'fa-moon');
+    }
+    
+    // Opcional: Salva a preferência do usuário no navegador
+    const isDark = body.classList.contains('dark-mode');
+    localStorage.setItem('darkTheme', isDark);
+});
+
+// Verifica se o usuário já tinha escolhido o modo escuro antes
+if (localStorage.getItem('darkTheme') === 'true') {
+    body.classList.add('dark-mode');
+    themeBtn.querySelector('i').classList.replace('fa-moon', 'fa-sun');
+}
