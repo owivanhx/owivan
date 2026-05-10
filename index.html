@@ -7,6 +7,24 @@
     <link rel="icon" type="x-icon" href="toyachibi.png">
     
     <style>
+
+        :root {
+            --bg-body: #ffffff;
+            --bg-window: #ffffff;
+            --text-main: #333333;
+            --text-date: #888888;
+            --border-color: #e0e0e0;
+        }
+        
+        /* Cores do Modo Escuro */
+        body.dark-mode {
+            --bg-body: #121212;
+            --bg-window: #1e1e1e;
+            --text-main: #e0e0e0;
+            --text-date: #aaaaaa;
+            --border-color: #333333;
+        
+        }
         /* Configurações Gerais */
         body {
             margin: 0;
@@ -15,21 +33,23 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #ffffff; /* Fundo branco como na imagem */
+            background-color: var(--bg-body); /* Fundo branco como na imagem */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #333;
+            color: var(--text-main);
+            transition: background 0.3s ease; /* Transição suave */
         }
 
         /* Container da "Janela" */
         .window {
             width: 500px;
-            background: #fff;
+            background: var(--bg-window);
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border: 1px solid #e0e0e0;
+            border: 1px solid var(--border-color);
             overflow: hidden;
             text-align: center;
             padding-bottom: 20px;
+            color: var(--text-main);
         }
 
         /* Barra Superior (Estilo Mac/Navegador) */
@@ -56,7 +76,7 @@
         .green { background: #27c93f; }
 
         .search-bar {
-            background: #eee;
+            background: var(--border-color); color: var(--text-date);
             margin: 0 auto;
             padding: 4px 15px;
             border-radius: 5px;
@@ -67,6 +87,7 @@
 
         /* Conteúdo Central */
         .clock {
+            color: var(--text-main);
             font-size: 64px;
             margin-top: 40px;
             font-weight: 300;
@@ -74,7 +95,7 @@
 
         .date {
             font-size: 14px;
-            color: #888;
+            color: var(--text-date);;
             margin-bottom: 40px;
         }
 
@@ -125,7 +146,31 @@
             text-transform: lowercase;
             margin-top: 10px;
         }
+
+        /* Estilo do Botão no Canto Direito */
+        .theme-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            background: var(--bg-window);
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .theme-btn:hover {
+            transform: scale(1.1);
+        }
+        
     </style>
+    
 </head>
 <body>
 
@@ -141,8 +186,6 @@
 
         <div id="clock" class="clock">00:00</div>
         <div id="date" class="date">carregando...</div>
-        
-        <script src="script.js"></script>
 
         <div class="links-container">
             <a href="#" class="item">
@@ -165,6 +208,12 @@
 
         <div class="footer-badge">made with carrd</div>
     </div>
-
+    
+<button id="theme-toggle" class="theme-btn" title="Mudar tema">
+    <i class="fa-solid fa-moon"></i>
+</button>
+    
+<script src="script.js"></script>
+    
 </body>
 </html>
