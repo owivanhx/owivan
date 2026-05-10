@@ -140,7 +140,9 @@
         </div>
 
         <div id="clock" class="clock">00:00</div>
-        <div id="date" class="date">Carregando data...</div>
+        <div id="date" class="date">carregando...</div>
+        
+        <script src="script.js"></script>
 
         <div class="links-container">
             <a href="#" class="item">
@@ -163,41 +165,6 @@
 
         <div class="footer-badge">made with carrd</div>
     </div>
-
-<script>
-    function updateSeoulClock() {
-        // Opções para formatar a hora especificamente para Seul
-        const options = {
-            timeZone: 'Asia/Seoul',
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false // Formato 24h igual ao da imagem (21:00)
-        const dateOptions = {
-            timeZone: 'Asia/Seoul', 
-            month: 'long', 
-            day: 'numeric', 
-            weekday: 'long' 
-        };
-        const dateSeoul = new Date().toLocaleDateString('ko-KR', dateOptions);
-document.getElementById('date').textContent = dateSeoul;
-        };
-
-        // Cria o formatador de data do navegador
-        const formatter = new Intl.DateTimeFormat('pt-BR', options);
-        
-        // Pega a hora atual convertida para o fuso de Seul
-        const seoulTime = formatter.format(new Date());
-
-        // Atualiza o HTML
-        document.getElementById('clock').textContent = seoulTime;
-    }
-
-    // Atualiza a cada segundo
-    setInterval(updateSeoulClock, 1000);
-
-    // Executa imediatamente ao abrir
-    updateSeoulClock();
-</script>
 
 </body>
 </html>
