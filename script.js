@@ -17,49 +17,38 @@ function updateTime() {
         weekday: 'long'
     });
 
-    document.getElementById('clock').textContent = timeStr;
-    document.getElementById('date').textContent = dateStr;
+    const clockEl = document.getElementById('clock');
+    const dateEl = document.getElementById('date');
+
+    if(clockEl) clockEl.textContent = timeStr;
+    if(dateEl) dateEl.textContent = dateStr;
 }
 
-// Alternar Tema
-const btn = document.getElementById('theme-toggle');
-btn.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    
-    // Troca o ícone
-    const icon = btn.querySelector('i');
-    icon.classList.toggle('fa-moon');
-    icon.classList.toggle('fa-sun');
-});
-
-// Iniciar
-setInterval(updateTime, 1000);
-updateTime();
-
-const btn = document.getElementById('theme-toggle');
-btn.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-});
+// Controle do Tema
+const themeBtn = document.getElementById('theme-toggle');
+const body = document.body;
 
 themeBtn.addEventListener('click', () => {
-    // Alterna a classe dark-mode no body
     body.classList.toggle('dark-mode');
     
-    // Troca o ícone (Lua para Sol)
     const icon = themeBtn.querySelector('i');
+    
     if (body.classList.contains('dark-mode')) {
         icon.classList.replace('fa-moon', 'fa-sun');
+        localStorage.setItem('darkTheme', 'true');
     } else {
         icon.classList.replace('fa-sun', 'fa-moon');
+        localStorage.setItem('darkTheme', 'false');
     }
-    
-    // Opcional: Salva a preferência do usuário no navegador
-    const isDark = body.classList.contains('dark-mode');
-    localStorage.setItem('darkTheme', isDark);
 });
 
-// Verifica se o usuário já tinha escolhido o modo escuro antes
+// Verifica preferência salva ao carregar
 if (localStorage.getItem('darkTheme') === 'true') {
     body.classList.add('dark-mode');
-    themeBtn.querySelector('i').classList.replace('fa-moon', 'fa-sun');
+    const icon = themeBtn.querySelector('i');
+    if(icon) icon.classList.replace('fa-moon', 'fa-sun');
 }
+
+// Iniciar relógio
+setInterval(updateTime, 1000);
+updateTime();
