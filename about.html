@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>about | owiwan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* CSS IDÊNTICO PARA MANTER O TEMA */
+        :root {
+            --bg-body: #ffffff;
+            --bg-window: #ffffff;
+            --text-main: #333333;
+            --border-color: #e0e0e0;
+        }
+        body.dark-mode {
+            --bg-body: #121212;
+            --bg-window: #1e1e1e;
+            --text-main: #e0e0e0;
+            --border-color: #333333;
+        }
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: var(--bg-body);
+            font-family: 'Segoe UI', sans-serif;
+            color: var(--text-main);
+            transition: 0.3s;
+        }
+        .window {
+            width: 500px;
+            background: var(--bg-window);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            text-align: center;
+            padding-bottom: 20px;
+        }
+        .top-bar { display: flex; align-items: center; padding: 10px 15px; border-bottom: 1px solid var(--border-color); }
+        .dots { display: flex; gap: 6px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .red { background: #ff5f56; } .yellow { background: #ffbd2e; } .green { background: #27c93f; }
+        
+        .content { padding: 40px 20px; }
+        h2 { font-weight: 300; margin-bottom: 20px; }
+        p { font-size: 14px; line-height: 1.6; opacity: 0.8; }
+
+        /* IMAGEM VOLTAR NO RODAPÉ */
+        .back-home {
+            width: 35px;
+            height: 35px;
+            margin-top: 30px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .back-home:hover { transform: scale(1.2); }
+
+        .theme-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            background: var(--bg-window);
+            color: var(--text-main);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="window">
+        <div class="top-bar">
+            <div class="dots"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
+            <div style="margin: 0 auto; font-size: 11px; opacity: 0.5;">www.owiwan.com/about</div>
+        </div>
+
+        <div class="content">
+            <h2>about the creator</h2>
+            <p>Olá! Eu sou o Ivan (ou Scar). Tenho 17 anos e sou do Brasil. Este site é um projeto pessoal focado em estética minimalista e funcionalidade.</p>
+            <p>Interesses: Design, Horror, Gaming e Astronomia.</p>
+
+            <a href="index.html">
+                <img src="piano.jpg" alt="home" class="back-home" title="Voltar ao início">
+            </a>
+        </div>
+    </div>
+
+    <button id="theme-toggle" class="theme-btn"><i class="fa-solid fa-moon"></i></button>
+
+<script src="script.js"></script>
+</body>
+</html>
