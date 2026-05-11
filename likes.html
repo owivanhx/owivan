@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>i likes ﹒ owiwan</title>
+    <link rel="icon" type="image/x-icon" href="bluey.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Reutilizando seu CSS principal */
+        :root {
+            --bg-body: #ffffff;
+            --bg-window: #ffffff;
+            --text-main: #333333;
+            --border-color: #e0e0e0;
+        }
+      
+        body.dark-mode {
+            --bg-body: #121212;
+            --bg-window: #1e1e1e;
+            --text-main: #e0e0e0;
+            --border-color: #333333;
+        }
+      
+        body {
+          margin: 0; 
+          display: flex; 
+          justify-content: center; 
+          align-items: center; 
+          min-height: 100vh;
+          background-color: var(--bg-body); 
+          font-family: 'Segoe UI', sans-serif; 
+          color: var(--text-main);
+          ransition: background 0.3s ease;
+        }
+      
+        .window {
+          width: 600px; 
+          background: var(--bg-window); 
+          border-radius: 12px;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+          border: 1px solid var(--border-color);
+          overflow: hidden; 
+          text-align: center; 
+          padding-bottom: 20px;
+        }
+      
+        .top-bar { 
+          display: flex; 
+          align-items: center; 
+          padding: 10px 15px; 
+          border-bottom: 1px solid var(--border-color); 
+        }
+        .dots { 
+          display: flex; 
+          gap: 6px; 
+        }
+        .dot { 
+          width: 10px; 
+          height: 10px; 
+          border-radius: 50%; 
+        }
+        .red { 
+          background: #ff5f56; 
+        } 
+      .yellow { 
+          background: #ffbd2e; 
+        } 
+      .green { 
+          background: #27c93f; 
+        }
+
+        .search-bar {
+          background: var(--border-color);
+          margin: 0 auto;
+          padding: 4px 15px;
+          border-radius: 5px;
+          font-size: 12px;
+          color: var(--text-main);
+          width: 50%;
+        }
+
+        
+        /* Grid para as 10 imagens */
+        .likes-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* 5 colunas */
+            gap: 20px;
+            padding: 40px;
+        }
+      
+        .circle {
+          width: 70px; 
+          height: 70px; 
+          border-radius: 50%; 
+          border: 1px solid var(--border-color);
+          overflow: hidden; 
+          margin: 0 auto 8px; 
+          background: #eee;
+        }
+      
+        .circle img { 
+          width: 100%; 
+          height: 100%; 
+          object-fit: cover; 
+          transition: 0.4s ease; 
+        }
+      
+        .item { 
+          text-decoration: none; 
+          color: var(--text-main); 
+          font-size: 11px; 
+        }
+      
+        .item:hover .circle img { 
+          transform: scale(1.2); 
+        }
+
+        .back-btn { 
+          width: 250px; 
+          height: 35px; 
+          margin-top: 10px; 
+          cursor: pointer; 
+          transition: 0.3s; 
+        }
+      
+        .back-btn:hover { 
+          transform: scale(1.1); 
+        }
+        
+        .theme-btn { 
+          position: fixed; 
+          bottom: 20px; 
+          right: 20px; 
+          width: 45px; 
+          height: 45px; 
+          border-radius: 50%; 
+          border: 1px solid var(--border-color); 
+          background: var(--bg-window); 
+          color: var(--text-main);
+          cursor: pointer; 
+          display: flex; 
+          justify-content: center; 
+          align-items: center; 
+          box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+        }
+      
+    </style>
+  
+</head>
+  
+<body>
+
+    <div class="window">
+        <div class="top-bar">
+            <div class="dots"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
+            <div class="search-bar">www.owiwan.com</div>
+        </div>
+
+        <h2 style="font-weight: 300; margin-top: 30px;">my favorite things</h2>
+
+        <div class="likes-grid">
+            <a href="poster1.html" class="item">
+                <div class="circle"><img src="imagens/movie1.jpg"></div>
+                <span>jogos</span>
+            </a>
+            <a href="poster2.html" class="item"><div class="circle"><img src="imagens/movie2.jpg"></div><span>movie 2</span></a>
+            <a href="poster3.html" class="item"><div class="circle"><img src="imagens/movie3.jpg"></div><span>movie 3</span></a>
+            <a href="poster4.html" class="item"><div class="circle"><img src="imagens/movie4.jpg"></div><span>movie 4</span></a>
+            <a href="poster5.html" class="item"><div class="circle"><img src="imagens/movie5.jpg"></div><span>movie 5</span></a>
+            <a href="poster6.html" class="item"><div class="circle"><img src="imagens/movie6.jpg"></div><span>movie 6</span></a>
+            <a href="poster7.html" class="item"><div class="circle"><img src="imagens/movie7.jpg"></div><span>movie 7</span></a>
+            <a href="poster8.html" class="item"><div class="circle"><img src="imagens/movie8.jpg"></div><span>movie 8</span></a>
+            <a href="poster9.html" class="item"><div class="circle"><img src="imagens/movie9.jpg"></div><span>movie 9</span></a>
+            <a href="poster10.html" class="item"><div class="circle"><img src="imagens/movie10.jpg"></div><span>movie 10</span></a>
+        </div>
+
+        <a href="index.html">
+            <img src="piano.png" class="back-btn" title="voltar">
+        </a>
+    </div>
+
+    <button id="theme-toggle" class="theme-btn"><i class="fa-solid fa-moon"></i></button>
+
+    <script src="script.js"></script>
+</body>
+</html>
