@@ -1,16 +1,12 @@
 // 1. Função do Relógio de Seul
-function updateSeoulTime() {
+function updateTime() {
     const agora = new Date();
-
-    // Configurações para o Relógio (HH:mm)
     const optionsTime = {
         timeZone: 'Asia/Seoul',
         hour: '2-digit',
         minute: '2-digit',
         hour12: false
     };
-
-    // Configurações para a Data em Coreano (igual à imagem)
     const optionsDate = {
         timeZone: 'Asia/Seoul',
         month: 'long',
@@ -18,30 +14,12 @@ function updateSeoulTime() {
         weekday: 'long'
     };
 
-    // Formatadores
-    const timeFormatter = new Intl.DateTimeFormat('ko-KR', optionsTime);
-    const dateFormatter = new Intl.DateTimeFormat('ko-KR', optionsDate);
+    const timeStr = agora.toLocaleTimeString('ko-KR', optionsTime);
+    const dateStr = agora.toLocaleDateString('ko-KR', optionsDate);
 
-    // Atualiza os elementos no HTML
-    const clockElement = document.getElementById('clock');
-    const dateElement = document.getElementById('date');
-
-    if (clockElement) {
-        clockElement.textContent = timeFormatter.format(agora);
-    }
-    
-    if (dateElement) {
-        dateElement.textContent = dateFormatter.format(agora);
-    }
+    document.getElementById('clock').textContent = timeStr;
+    document.getElementById('date').textContent = dateStr;
 }
-
-// Atualiza a cada segundo
-setInterval(updateSeoulTime, 1000);
-
-// Executa assim que a página carregar
-window.onload = updateSeoulTime;
-
-
 
 // 2. Controle do Modo Escuro
 const themeBtn = document.getElementById('theme-toggle');
