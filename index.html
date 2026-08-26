@@ -5,15 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>owiwan</title>
     <link rel="icon" type="image/x-icon" href="bluey.png">
+    <!-- FontAwesome necessário para o ícone de lua/sol -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* Variáveis de Cores */
+        /* Variáveis de Cores Modo Claro */
         :root {
             --bg-body: #ffffff;
             --bg-window: #ffffff;
             --text-main: #333333;
             --text-date: #888888;
             --border-color: #e0e0e0;
+        }
+
+        /* Variáveis de Cores Modo Escuro */
+        body.dark-mode {
+            --bg-body: #121212;
+            --bg-window: #1e1e1e;
+            --text-main: #e0e0e0;
+            --text-date: #aaaaaa;
+            --border-color: #333333;
         }
 
         /* Configurações de Fundo e Texto */
@@ -26,6 +37,7 @@
             background-color: var(--bg-body);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--text-main);
+            transition: background 0.3s ease;
         }
 
         /* Container Principal */
@@ -38,6 +50,7 @@
             overflow: hidden;
             text-align: center;
             padding-bottom: 20px;
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
 
         /* Barra Superior */
@@ -125,6 +138,28 @@
             border-radius: 20px;
             font-size: 10px;
         }
+
+        /* Botão Alternador de Tema */
+        .theme-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            background: var(--bg-window);
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .theme-btn:hover {
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
@@ -139,24 +174,24 @@
             <div class="search-bar">www.owiwan.com</div>
         </div>
 
-        <div class="clock">21:00</div>
-        <div class="date">8월 16일 화요일</div>
+        <div id="clock" class="clock">21:00</div>
+        <div id="date" class="date">carregando...</div>
 
         <div class="links-container">
             <a href="about.html" class="item">
-                <div class="circle"><img src="/imagens/img1.jpg" alt="about"></div>
+                <div class="circle"><img src="imagens/img1.jpg" alt="about"></div>
                 <span>about</span>
             </a>
-            <a href="#" class="item">
-                <div class="circle"><img src="/imagens/img2.jpg" alt="likes"></div>
+            <a href="likes.html" class="item">
+                <div class="circle"><img src="imagens/img2.jpg" alt="likes"></div>
                 <span>likes</span>
             </a>
             <a href="#" class="item">
-                <div class="circle"><img src="/imagens/img3.jpg" alt="..."></div>
+                <div class="circle"><img src="imagens/img3.jpg" alt="..."></div>
                 <span>...</span>
             </a>
             <a href="#" class="item">
-                <div class="circle"><img src="/imagens/img4.jpg" alt="social"></div>
+                <div class="circle"><img src="imagens/img4.jpg" alt="social"></div>
                 <span>social medias</span>
             </a>
         </div>
@@ -164,6 +199,9 @@
         <div class="footer-badge">made by owivan</div>
     </div>
 
-<script src="script.js"></script>
+    <!-- Botão de alternar tema escuro/claro -->
+    <button id="theme-toggle" class="theme-btn"><i class="fa-solid fa-moon"></i></button>
+
+    <script src="script.js"></script>
 </body>
 </html>
