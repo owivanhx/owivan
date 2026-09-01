@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>owiwan - games</title>
+    <title>jogo que vince gosta</title>
     <link rel="icon" type="image/x-icon" href="zackchibi.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -49,7 +49,7 @@
         /* Janela Principal */
         .window {
             width: 100%;
-            max-width: 850px;
+            max-width: 900px;
             background: var(--bg-window);
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
@@ -101,40 +101,45 @@
         /* Layout do Catálogo */
         .catalog-container {
             display: flex;
-            gap: 20px;
-            padding: 20px;
+            gap: 24px;
+            padding: 24px;
         }
 
         /* Grade de Jogos */
         .games-grid {
             flex: 1;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-            gap: 16px;
-            max-height: 420px;
+            grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+            gap: 20px 18px; /* Espaçamento bem definido entre as linhas e colunas */
+            max-height: 440px;
             overflow-y: auto;
-            padding-right: 10px;
+            padding-right: 12px;
+            box-sizing: border-box;
         }
 
         .game-card {
+            width: 100%;
             aspect-ratio: 3 / 4;
-            border-radius: 10px;
+            border-radius: 8px;
             overflow: hidden;
             cursor: pointer;
-            border: 2px solid transparent;
-            transition: transform 0.2s ease, border-color 0.2s ease;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            background-color: var(--bg-card);
         }
 
         .game-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
         }
 
         .game-card:hover {
             transform: translateY(-4px);
-            border-color: var(--text-date);
+            border-color: var(--text-main);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
         }
 
         /* Scrollbar Interna */
@@ -154,10 +159,11 @@
 
         /* Painel Lateral */
         .details-sidebar {
-            width: 250px;
+            width: 260px;
             display: flex;
             flex-direction: column;
             gap: 15px;
+            flex-shrink: 0;
         }
 
         .sidebar-box {
@@ -253,7 +259,7 @@
             }
 
             .games-grid {
-                max-height: 300px;
+                max-height: 320px;
             }
 
             .search-bar {
