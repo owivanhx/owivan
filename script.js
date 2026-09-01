@@ -24,7 +24,58 @@ function updateTime() {
     if (dateElem) dateElem.textContent = dateStr;
 }
 
-// 2. Controle do Modo Escuro
+// 2. Gerador do Calendário
+function generateCalendar() {
+    const agora = new Date();
+    const ano = agora.getFullYear();
+    const mes = agora.getMonth();
+    const diaHoje = agora.getDate();
+
+    const header = document.getElementById('calendar-header');
+    const grid = document.getElementById('calendar-grid');
+
+    if (!header || !grid) return;
+
+    // Nome do Mês e Ano no topo
+    const nomeMes = agora.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+    header.textContent = nomeMes;
+
+    grid.innerHTML = '';
+
+    // Dias da semana
+    const diasSemana = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
+    diasSemana.forEach(dia => {
+        const div = document.createElement('div');
+        div.className = 'calendar-day-name';
+        div.textContent = dia;
+        grid.appendChild(div);
+    });
+
+    // Primeiro dia e total de dias do mês
+    const primeiroDiaIndex = new Date(ano, mes, 1).getDay();
+    const totalDias = new Date(ano, mes + 1, 0).getDate();
+
+    // Espaços em branco antes do primeiro dia
+    for (let i = 0; i < primeiroDiaIndex; i++) {
+        const vazio = document.createElement('div');
+        grid.appendChild(vazio);
+    }
+
+    // Dias do mês
+    for (let dia = 1; dia <= totalDias; dia++) {
+        const divDia = document.createElement('div');
+        divDia.className = 'calendar-day';
+        divDia.textContent = dia;
+
+        if (dia === diaHoje) {
+            divDia.classList.add('today');
+        }
+
+        grid.appendChild(divDia);
+    }
+}
+
+// 3. Controle do Modo Escuro
 const themeBtn = document.getElementById('theme-toggle');
 const body = document.body;
 
@@ -44,7 +95,6 @@ if (themeBtn) {
     });
 }
 
-// 3. Verifica se já estava no modo escuro ao carregar a página
 if (localStorage.getItem('darkTheme') === 'true') {
     body.classList.add('dark-mode');
     if (themeBtn) {
@@ -53,6 +103,7 @@ if (localStorage.getItem('darkTheme') === 'true') {
     }
 }
 
-// Inicialização
+// Inicializações
 setInterval(updateTime, 1000);
 updateTime();
+generateCalendar();
