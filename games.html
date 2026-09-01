@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Jogos</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Layout Principal */
+        .catalog-container {
+            display: flex;
+            gap: 20px;
+            background-color: #1e1e1e;
+            border: 1px solid #2d2d2d;
+            border-radius: 18px;
+            padding: 20px;
+            width: 100%;
+            max-width: 920px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Grade de Jogos */
+        .games-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 12px;
+            max-height: 440px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        .game-card {
+            aspect-ratio: 1 / 1;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .game-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .game-card:hover {
+            transform: scale(1.03);
+            border-color: #444;
+        }
+
+        /* Scrollbar Interna */
+        .games-grid::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .games-grid::-webkit-scrollbar-track {
+            background: #141414;
+            border-radius: 4px;
+        }
+
+        .games-grid::-webkit-scrollbar-thumb {
+            background: #333333;
+            border-radius: 4px;
+        }
+
+        /* Painel Lateral */
+        .details-sidebar {
+            width: 260px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .sidebar-box {
+            background-color: #141414;
+            border: 1px solid #282828;
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .box-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #888888;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        #preview-cover {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            background-color: #222;
+        }
+
+        #game-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        #game-developer {
+            font-size: 0.85rem;
+            color: #aaaaaa;
+        }
+
+        #game-description {
+            font-size: 0.85rem;
+            color: #cccccc;
+            line-height: 1.4;
+        }
+
+        /* Adaptado para Celulares */
+        @media (max-width: 768px) {
+            .catalog-container {
+                flex-direction: column;
+                padding: 15px;
+            }
+
+            .details-sidebar {
+                width: 100%;
+            }
+
+            .games-grid {
+                max-height: 320px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="catalog-container">
+        <!-- Grade de Capas dos Jogos -->
+        <div class="games-grid">
+            <div class="game-card" onclick="selectGame('Valorant', 'Riot Games', 'https://via.placeholder.com/300/111/fff?text=Valorant', 'FPS tático 5v5 focado em precisão e habilidades de agentes.')">
+                <img src="https://via.placeholder.com/150/222/fff?text=Valorant" alt="Valorant">
+            </div>
+            <div class="game-card" onclick="selectGame('Minecraft', 'Mojang Studios', 'https://via.placeholder.com/300/111/fff?text=Minecraft', 'Jogo Sandbox de exploração, sobrevivência e construção livre.')">
+                <img src="https://via.placeholder.com/150/222/fff?text=Minecraft" alt="Minecraft">
+            </div>
+            <div class="game-card" onclick="selectGame('Genshin Impact', 'HoYoverse', 'https://via.placeholder.com/300/111/fff?text=Genshin', 'RPG de ação em mundo aberto com combates baseados em elementos.')">
+                <img src="https://via.placeholder.com/150/222/fff?text=Genshin" alt="Genshin Impact">
+            </div>
+            <div class="game-card" onclick="selectGame('Roblox', 'Roblox Corp', 'https://via.placeholder.com/300/111/fff?text=Roblox', 'Plataforma de experiências interativas e jogos criados pela comunidade.')">
+                <img src="https://via.placeholder.com/150/222/fff?text=Roblox" alt="Roblox">
+            </div>
+        </div>
+
+        <!-- Painel Lateral -->
+        <div class="details-sidebar">
+            <div class="sidebar-box">
+                <span class="box-label">Jogo Selecionado</span>
+                <img id="preview-cover" src="https://via.placeholder.com/300/111/fff?text=Selecione" alt="Capa do Jogo">
+                <h3 id="game-title">Selecione um jogo</h3>
+                <p id="game-developer">-</p>
+            </div>
+
+            <div class="sidebar-box">
+                <span class="box-label">Sobre</span>
+                <p id="game-description">Clique em qualquer capa da grade para visualizar as informações.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function selectGame(title, developer, coverUrl, description) {
+            document.getElementById('game-title').textContent = title;
+            document.getElementById('game-developer').textContent = developer;
+            document.getElementById('preview-cover').src = coverUrl;
+            document.getElementById('game-description').textContent = description;
+        }
+    </script>
+
+</body>
+</html>
