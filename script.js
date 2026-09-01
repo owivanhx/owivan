@@ -1,6 +1,6 @@
 // Configurações do Spotify
 const CLIENT_ID = '9a9bd8c154c84bef81a0311fbcd5737c';
-const REDIRECT_URI = window.location.href.split('#')[0];
+const REDIRECT_URI = 'https://owivanhx.github.io/owivan/index.html';
 const SCOPES = 'user-read-currently-playing user-read-playback-state';
 
 // 1. Relógio de Seul
