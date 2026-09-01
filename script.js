@@ -3,7 +3,9 @@ const CLIENT_ID = '9a9bd8c154c84bef81a0311fbcd5737c';
 const REDIRECT_URI = 'https://owivanhx.github.io/owivan/index.html';
 const SCOPES = 'user-read-currently-playing user-read-playback-state';
 
+// ----------------------------------------------------
 // 1. Relógio de Seul
+// ----------------------------------------------------
 function updateTime() {
     const agora = new Date();
     const optionsTime = { timeZone: 'Asia/Seoul', hour: '2-digit', minute: '2-digit', hour12: false };
@@ -19,7 +21,9 @@ function updateTime() {
     if (dateElem) dateElem.textContent = dateStr;
 }
 
+// ----------------------------------------------------
 // 2. Calendário
+// ----------------------------------------------------
 function generateCalendar() {
     const agora = new Date();
     const ano = agora.getFullYear();
@@ -58,28 +62,79 @@ function generateCalendar() {
     }
 }
 
-// 3. Autenticação e API do Spotify
-function getAccessToken() {
-    const hash = window.location.hash.substring(1);
-    const params = new URLSearchParams(hash);
-    let token = params.get('access_token');
-
-    if (token) {
-        localStorage.setItem('spotify_token', token);
-        window.location.hash = '';
-        return token;
+// ----------------------------------------------------
+// 3. Autenticação PKCE e API do Spotify (Sem Servidor)
+// ----------------------------------------------------
+function generateRandomString(length) {
+    let text = '';
+    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (let i = 0; i < length; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
-
-    return localStorage.getItem('spotify_token');
+    return text;
 }
 
-function loginSpotify() {
-    const authUrl = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=token&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=${encodeURIComponent(SCOPES)}`;
-    window.location.href = authUrl;
+async function generateCodeChallenge(codeVerifier) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(codeVerifier);
+    const digest = await window.crypto.subtle.digest('SHA-256', data);
+    return btoa(String.fromCharCode.apply(null, new Uint8Array(digest)))
+        .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+async function loginSpotify() {
+    const codeVerifier = generateRandomString(128);
+    const codeChallenge = await generateCodeChallenge(codeVerifier);
+
+    localStorage.setItem('spotify_code_verifier', codeVerifier);
+
+    const authUrl = new URL('https://accounts.spotify.com/authorize');
+    authUrl.search = new URLSearchParams({
+        client_id: CLIENT_ID,
+        response_type: 'code',
+        redirect_uri: REDIRECT_URI,
+        scope: SCOPES,
+        code_challenge_method: 'S256',
+        code_challenge: codeChallenge
+    }).toString();
+
+    window.location.href = authUrl.toString();
+}
+
+async function handleSpotifyCallback() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+
+    if (code) {
+        const codeVerifier = localStorage.getItem('spotify_code_verifier');
+
+        try {
+            const response = await fetch('https://accounts.spotify.com/api/token', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({
+                    client_id: CLIENT_ID,
+                    grant_type: 'authorization_code',
+                    code: code,
+                    redirect_uri: REDIRECT_URI,
+                    code_verifier: codeVerifier
+                })
+            });
+
+            const data = await response.json();
+            if (data.access_token) {
+                localStorage.setItem('spotify_token', data.access_token);
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        } catch (err) {
+            console.error('Erro ao obter token do Spotify:', err);
+        }
+    }
 }
 
 async function fetchCurrentTrack() {
-    const token = getAccessToken();
+    await handleSpotifyCallback();
+    const token = localStorage.getItem('spotify_token');
 
     if (!token) {
         showLoginButton();
@@ -88,13 +143,16 @@ async function fetchCurrentTrack() {
 
     try {
         const response = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
+            headers: { 'Authorization': `Bearer ${token}` }
         });
 
-        if (response.status === 204 || response.status === 401) {
-            if (response.status === 401) localStorage.removeItem('spotify_token');
+        if (response.status === 401) {
+            localStorage.removeItem('spotify_token');
+            showLoginButton();
+            return;
+        }
+
+        if (response.status === 204) {
             updateSpotifyUI(null);
             return;
         }
@@ -134,12 +192,14 @@ function updateSpotifyUI(data) {
 function showLoginButton() {
     const title = document.getElementById('spotify-title');
     const artist = document.getElementById('spotify-artist');
-    
+
     if (title) title.textContent = 'Spotify Desconectado';
-    if (artist) artist.innerHTML = '<a href="#" onclick="loginSpotify()" style="color: var(--spotify-green); text-decoration: underline;">Clique para conectar</a>';
+    if (artist) artist.innerHTML = '<a href="javascript:void(0)" onclick="loginSpotify()" style="color: #1db954; font-weight: bold; text-decoration: underline;">Conectar Spotify</a>';
 }
 
+// ----------------------------------------------------
 // 4. Controle do Modo Escuro
+// ----------------------------------------------------
 const themeBtn = document.getElementById('theme-toggle');
 const body = document.body;
 
@@ -147,7 +207,7 @@ if (themeBtn) {
     themeBtn.addEventListener('click', () => {
         body.classList.toggle('dark-mode');
         const icon = themeBtn.querySelector('i');
-        
+
         if (body.classList.contains('dark-mode')) {
             if (icon) icon.classList.replace('fa-moon', 'fa-sun');
             localStorage.setItem('darkTheme', 'true');
@@ -166,7 +226,9 @@ if (localStorage.getItem('darkTheme') === 'true') {
     }
 }
 
+// ----------------------------------------------------
 // Inicializações
+// ----------------------------------------------------
 setInterval(updateTime, 1000);
 setInterval(fetchCurrentTrack, 3000);
 updateTime();
