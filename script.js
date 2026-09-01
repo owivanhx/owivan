@@ -1,21 +1,97 @@
-// Substitua este ID pelo seu ID do Discord (o Discord precisa estar conectado à sua conta do Spotify)
-const DISCORD_USER_ID = "SEU_DISCORD_ID_AQUI"; 
+// Configurações do Spotify
+const CLIENT_ID = '9a9bd8c154c84bef81a0311fbcd5737c'; // Cole aqui o Client ID gerado no dashboard
+const REDIRECT_URI = window.location.href.split('#')[0]; // URL atual da sua página
+const SCOPES = 'user-read-currently-playing user-read-playback-state';
 
-// 1. Relógio de Seul
-function updateTime() {
-    const agora = new Date();
-    const optionsTime = { timeZone: 'Asia/Seoul', hour: '2-digit', minute: '2-digit', hour12: false };
-    const optionsDate = { timeZone: 'Asia/Seoul', month: 'long', day: 'numeric', weekday: 'long' };
+// 1. Obtém o Token de Acesso da URL ou do LocalStorage
+function getAccessToken() {
+    const hash = window.location.hash.substring(1);
+    const params = new URLSearchParams(hash);
+    let token = params.get('access_token');
 
-    const timeStr = agora.toLocaleTimeString('ko-KR', optionsTime);
-    const dateStr = agora.toLocaleDateString('ko-KR', optionsDate);
+    if (token) {
+        localStorage.setItem('spotify_token', token);
+        window.location.hash = ''; // Limpa a URL
+        return token;
+    }
 
-    const clockElem = document.getElementById('clock');
-    const dateElem = document.getElementById('date');
-
-    if (clockElem) clockElem.textContent = timeStr;
-    if (dateElem) dateElem.textContent = dateStr;
+    return localStorage.getItem('spotify_token');
 }
+
+// 2. Redireciona para o login do Spotify caso não tenha autorização
+function loginSpotify() {
+    const authUrl = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=token&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=${encodeURIComponent(SCOPES)}`;
+    window.location.href = authUrl;
+}
+
+// 3. Busca a música em reprodução diretamente na API do Spotify
+async function fetchCurrentTrack() {
+    const token = getAccessToken();
+
+    if (!token) {
+        showLoginButton();
+        return;
+    }
+
+    try {
+        const response = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (response.status === 204 || response.status === 401) {
+            // Se o token expirou ou não há música tocando
+            if (response.status === 401) localStorage.removeItem('spotify_token');
+            updateSpotifyUI(null);
+            return;
+        }
+
+        const data = await response.json();
+        updateSpotifyUI(data);
+    } catch (error) {
+        console.error('Erro ao buscar status do Spotify:', error);
+        updateSpotifyUI(null);
+    }
+}
+
+// 4. Atualiza a interface da tela
+function updateSpotifyUI(data) {
+    const cover = document.getElementById('spotify-cover');
+    const title = document.getElementById('spotify-title');
+    const artist = document.getElementById('spotify-artist');
+    const progress = document.getElementById('spotify-progress');
+
+    if (data && data.is_playing && data.item) {
+        cover.src = data.item.album.images[0]?.url || '';
+        title.textContent = data.item.name;
+        artist.textContent = data.item.artists.map(a => a.name).join(', ');
+
+        const total = data.item.duration_ms;
+        const atual = data.progress_ms;
+        const porcentagem = Math.min(100, Math.max(0, (atual / total) * 100));
+
+        if (progress) progress.style.width = `${porcentagem}%`;
+    } else {
+        cover.src = 'https://i.postimg.cc/mDkx1k8D/spotify-placeholder.png';
+        title.textContent = 'Não ouvindo nada';
+        artist.textContent = 'Spotify Pausado';
+        if (progress) progress.style.width = '0%';
+    }
+}
+
+// Botão auxiliar caso o usuário precise conectar a conta
+function showLoginButton() {
+    const title = document.getElementById('spotify-title');
+    const artist = document.getElementById('spotify-artist');
+    
+    title.textContent = 'Spotify Desconectado';
+    artist.innerHTML = '<a href="#" onclick="loginSpotify()" style="color: var(--spotify-green); text-decoration: underline;">Clique para conectar</a>';
+}
+
+// Atualização contínua (A cada 3 segundos busca a música atual)
+setInterval(fetchCurrentTrack, 3000);
+fetchCurrentTrack();
 
 // 2. Calendário
 function generateCalendar() {
