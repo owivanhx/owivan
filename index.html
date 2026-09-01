@@ -8,25 +8,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* Variáveis de Cores Modo Claro */
         :root {
             --bg-body: #ffffff;
             --bg-window: #ffffff;
             --text-main: #333333;
             --text-date: #888888;
             --border-color: #e0e0e0;
+            --highlight-bg: #333333;
+            --highlight-text: #ffffff;
         }
 
-        /* Variáveis de Cores Modo Escuro */
         body.dark-mode {
             --bg-body: #121212;
             --bg-window: #1e1e1e;
             --text-main: #e0e0e0;
             --text-date: #aaaaaa;
             --border-color: #333333;
+            --highlight-bg: #ffffff;
+            --highlight-text: #121212;
         }
 
-        /* Configurações de Fundo e Texto */
         body {
             margin: 0;
             display: flex;
@@ -39,7 +40,56 @@
             transition: background 0.3s ease;
         }
 
-        /* Container Principal */
+        /* Widget de Calendário (Canto Superior Esquerdo) */
+        .calendar-widget {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--bg-window);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 220px;
+            text-align: center;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        .calendar-header {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-transform: capitalize;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            font-size: 11px;
+        }
+
+        .calendar-day-name {
+            font-weight: 600;
+            color: var(--text-date);
+            padding-bottom: 4px;
+        }
+
+        .calendar-day {
+            padding: 5px 0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .calendar-day.today {
+            background-color: var(--highlight-bg);
+            color: var(--highlight-text);
+            font-weight: bold;
+        }
+
+        /* Card Central */
         .window {
             width: 500px;
             background: var(--bg-window);
@@ -52,7 +102,6 @@
             transition: background 0.3s ease, border-color 0.3s ease;
         }
 
-        /* Barra Superior */
         .top-bar {
             display: flex;
             align-items: center;
@@ -76,7 +125,6 @@
             color: var(--text-main);
         }
 
-        /* Relógio e Data */
         .clock {
             font-size: 64px;
             margin-top: 40px;
@@ -89,7 +137,6 @@
             margin-bottom: 40px;
         }
 
-        /* Navegação */
         .links-container {
             display: flex;
             justify-content: center;
@@ -125,7 +172,6 @@
             transition: transform 0.4s ease;
         }
 
-        /* Efeito Hover nas Imagens */
         .item:hover .circle img {
             transform: scale(1.2);
         }
@@ -163,6 +209,13 @@
 </head>
 <body>
 
+    <!-- Calendário no Canto Superior Esquerdo -->
+    <div class="calendar-widget">
+        <div id="calendar-header" class="calendar-header"></div>
+        <div id="calendar-grid" class="calendar-grid"></div>
+    </div>
+
+    <!-- Janela Principal -->
     <div class="window">
         <div class="top-bar">
             <div class="dots">
@@ -173,7 +226,7 @@
             <div class="search-bar">www.owiwan.com</div>
         </div>
 
-        <div id="clock" class="clock">21:00</div>
+        <div id="clock" class="clock">00:00</div>
         <div id="date" class="date">carregando...</div>
 
         <div class="links-container">
@@ -198,7 +251,6 @@
         <div class="footer-badge">made by owivan</div>
     </div>
 
-    <!-- Botão de alternar tema escuro/claro -->
     <button id="theme-toggle" class="theme-btn"><i class="fa-solid fa-moon"></i></button>
 
     <script src="script.js"></script>
