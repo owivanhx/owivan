@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>jogo que vince gosta</title>
+    <title>animes que vince gosta</title>
     <link rel="icon" type="image/x-icon" href="zackchibi.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -105,12 +105,12 @@
             padding: 24px;
         }
 
-        /* Grade de Jogos */
+        /* Grade de Animes */
         .games-grid {
             flex: 1;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
-            gap: 20px 18px; /* Espaçamento bem definido entre as linhas e colunas */
+            gap: 20px 18px;
             max-height: 440px;
             overflow-y: auto;
             padding-right: 12px;
@@ -279,92 +279,101 @@
                 <div class="dot green"></div>
             </div>
             <a href="likes.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
-            <div class="search-bar">www.owiwan.com/games</div>
+            <div class="search-bar">www.owiwan.com/animes</div>
         </div>
 
         <div class="catalog-container">
-            <!-- Grade de Capas dos Jogos -->
+            <!-- Grade de Capas dos Animes -->
             <div class="games-grid">
-                <div class="game-card" onclick="selectGame('Coldfront', 'racheldrawsthings', 'jogos/coldfront.jpg', 'Visual novel psicológica e jogo de aventura focado em exploração e mistério.')">
-                    <img src="jogos/coldfront.jpg" alt="Coldfront">
+                <div class="game-card" onclick="selectAnime('Ron Kamonohashi\'s Forbidden Deductions', 'diomedéa', 'animes/Kamonohashi Ron no Kindan Su...jpg', 'Um detetive particular excêntrico e um policial ingênuo se unem para resolver os mistérios mais sombrios.')">
+                    <img src="animes/Kamonohashi Ron no Kindan Su...jpg" alt="Ron Kamonohashi">
                 </div>
-                <div class="game-card" onclick="selectGame('Deadplate', 'Studio investigrave', 'jogos/deadplate.jpg', 'RPG Maker / Visual Novel de suspense que se passa em um restaurante francês nos anos 60.')">
-                    <img src="jogos/deadplate.jpg" alt="Deadplate">
+                <div class="game-card" onclick="selectAnime('Blue Period', 'Seven Arcs', 'animes/blueperiod.jpg', 'Um estudante do ensino médio descobre a paixão pela pintura e busca entrar na universidade de artes.')">
+                    <img src="animes/blueperiod.jpg" alt="Blue Period">
                 </div>
-                <div class="game-card" onclick="selectGame('Detroit: Become Human', 'Quantic Dream', 'jogos/detroit.jpg', 'Jogo de ficção científica interativo centrado nas escolhas de três androides.')">
-                    <img src="jogos/detroit.jpg" alt="Detroit: Become Human">
+                <div class="game-card" onclick="selectAnime('Bungou Stray Dogs', 'Bones', 'animes/bsd.jpg', 'Indivíduos com poderes sobrenaturais baseados em autores famosos resolvem mistérios na Agência de Detetives.')">
+                    <img src="animes/bsd.jpg" alt="Bungou Stray Dogs">
                 </div>
-                <div class="game-card" onclick="selectGame('Devil May Cry 5', 'Capcom', 'jogos/dmc5.jpg', 'Jogo de ação estilizada e hack and slash frenético com múltiplos personagens jogáveis.')">
-                    <img src="jogos/dmc5.jpg" alt="Devil May Cry 5">
+                <div class="game-card" onclick="selectAnime('Buddy Daddies', 'P.A. Works', 'animes/buddydaddies.jpg', 'Dois assassinos profissionais se veem forçados a cuidar da filha de quatro anos de um chefe do crime.')">
+                    <img src="animes/buddydaddies.jpg" alt="Buddy Daddies">
                 </div>
-                <div class="game-card" onclick="selectGame('Final Fantasy XV', 'Square Enix', 'jogos/ff15.jpg', 'RPG de ação em mundo aberto seguindo a jornada do príncipe Noctis e seus amigos.')">
-                    <img src="jogos/ff15.jpg" alt="Final Fantasy XV">
+                <div class="game-card" onclick="selectAnime('Death Note', 'Madhouse', 'animes/deathnote.jpg', 'Um estudante encontra um caderno capaz de matar qualquer pessoa cujo nome seja escrito nele.')">
+                    <img src="animes/deathnote.jpg" alt="Death Note">
                 </div>
-                <div class="game-card" onclick="selectGame('Final Fantasy VII Remake', 'Square Enix', 'jogos/ff7r.jpg', 'Reimaginação moderna do clássico RPG, combinando combate em tempo real e tático.')">
-                    <img src="jogos/ff7r.jpg" alt="Final Fantasy VII Remake">
+                <div class="game-card" onclick="selectAnime('Durarara!!', 'Brain\'s Base', 'animes/drrr.jpg', 'Eventos misteriosos e gangs urbanas se entrelaçam no agitado distrito de Ikebukuro.')">
+                    <img src="animes/drrr.jpg" alt="Durarara!!">
                 </div>
-                <div class="game-card" onclick="selectGame('Five Nights at Freddy\'s', 'Scott Cawthon', 'jogos/fnaf.jpg', 'Jogo de sobrevivência e terror psicológico focado em gerenciar câmeras de segurança.')">
-                    <img src="jogos/fnaf.jpg" alt="Five Nights at Freddy's">
+                <div class="game-card" onclick="selectAnime('Dr. STONE', 'TMS Entertainment', 'animes/drstone.jpg', 'Milhares de anos após a humanidade ser petrificada, um prodígio da ciência tenta reconstruir a civilização.')">
+                    <img src="animes/drstone.jpg" alt="Dr. STONE">
                 </div>
-                <div class="game-card" onclick="selectGame('Galerians', 'Polygon Magic / ASCII', 'jogos/galerians.jpg', 'Clássico jogo de survival horror com temática cyberpunk e poderes psíquicos.')">
-                    <img src="jogos/galerians.jpg" alt="Galerians">
+                <div class="game-card" onclick="selectAnime('Fullmetal Alchemist', 'Bones', 'animes/fullmetal.jpg', 'Dois irmãos alquimistas buscam a Pedra Filosofal para recuperar seus corpos após um ritual fracassado.')">
+                    <img src="animes/fullmetal.jpg" alt="Fullmetal Alchemist">
                 </div>
-                <div class="game-card" onclick="selectGame('Hades', 'Supergiant Games', 'jogos/hades.jpg', 'Roguelike de ação focado na mitologia grega e em escapar do Submundo.')">
-                    <img src="jogos/hades.jpg" alt="Hades">
+                <div class="game-card" onclick="selectAnime('Haikyu!!', 'Production I.G', 'animes/haikyuu.jpg', 'A jornada do time de vôlei do colégio Karasuno em busca do topo do campeonato nacional.')">
+                    <img src="animes/haikyuu.jpg" alt="Haikyu!!">
                 </div>
-                <div class="game-card" onclick="selectGame('Kingdom Hearts', 'Square Enix', 'jogos/kingdomhearts.jpg', 'RPG de ação e aventura misturando elementos da Disney e da Square Enix.')">
-                    <img src="jogos/kingdomhearts.jpg" alt="Kingdom Hearts">
+                <div class="game-card" onclick="selectAnime('Toilet-bound Hanako-kun', 'Lerche', 'animes/hanakokun.jpg', 'Uma estudante faz um pacto com o espírito de Hanako-kun, o sétimo mistério da escola.')">
+                    <img src="animes/hanakokun.jpg" alt="Hanako-kun">
                 </div>
-                <div class="game-card" onclick="selectGame('Marvel Rivals', 'NetEase Games', 'jogos/marvelrivals.jpg', 'Hero shooter multijogador em terceira pessoa com heróis e vilões da Marvel.')">
-                    <img src="jogos/marvelrivals.jpg" alt="Marvel Rivals">
+                <div class="game-card" onclick="selectAnime('Loveless', 'J.C.Staff', 'animes/loveless.jpg', 'Ritsuka investiga a morte misteriosa de seu irmão enquanto se envolve no mundo de batalhas verbais.')">
+                    <img src="animes/loveless.jpg" alt="Loveless">
                 </div>
-                <div class="game-card" onclick="selectGame('Metal Gear Solid V: TPP', 'Kojima Productions', 'jogos/mgs5.jpg', 'Jogo de ação e espionagem tática em mundo aberto com foco em stealth.')">
-                    <img src="jogos/mgs5.jpg" alt="Metal Gear Solid V">
+                <div class="game-card" onclick="selectAnime('Mashle: Magic and Muscles', 'A-1 Pictures', 'animes/mashle.jpg', 'Em um mundo onde a magia é tudo, um jovem sem poderes usa sua força física bruta para superar os magos.')">
+                    <img src="animes/mashle.jpg" alt="Mashle">
                 </div>
-                <div class="game-card" onclick="selectGame('Mouthwashing', 'Wrong Organ', 'jogos/mouthwashing.jpg', 'Jogo de terror psicológico em primeira pessoa focado na tripulação de uma nave condenada.')">
-                    <img src="jogos/mouthwashing.jpg" alt="Mouthwashing">
+                <div class="game-card" onclick="selectAnime('The Millionaire Detective', 'CloverWorks', 'animes/millionairedetective.jpg', 'Um herdeiro milionário usa recursos ilimitados para resolver crimes ao lado de um parceiro rígido.')">
+                    <img src="animes/millionairedetective.jpg" alt="The Millionaire Detective">
                 </div>
-                <div class="game-card" onclick="selectGame('Persona 3', 'Atlus', 'jogos/persona3.jpg', 'RPG com elementos de simulação social centrado no mistério da Hora Sombria.')">
-                    <img src="jogos/persona3.jpg" alt="Persona 3">
+                <div class="game-card" onclick="selectGame('One Piece', 'Toei Animation', 'animes/onepiece.jpg', 'Monkey D. Luffy e sua tripulação navegam pelos mares em busca do lendário tesouro One Piece.')">
+                    <img src="animes/onepiece.jpg" alt="One Piece">
                 </div>
-                <div class="game-card" onclick="selectGame('Persona 4', 'Atlus', 'jogos/persona4.jpg', 'RPG de ação, suspense e vida escolar investigando assassinatos na cidade de Inaba.')">
-                    <img src="jogos/persona4.jpg" alt="Persona 4">
+                <div class="game-card" onclick="selectAnime('Seraph of the End', 'Wit Studio', 'animes/owarinseraph.jpg', 'Em um mundo pós-apocalíptico dominado por vampiros, humanos lutam pela própria sobrevivência.')">
+                    <img src="animes/owarinseraph.jpg" alt="Seraph of the End">
                 </div>
-                <div class="game-card" onclick="selectGame('Persona 5', 'Atlus', 'jogos/persona5.jpg', 'RPG elegante focado nos Phantom Thieves roubando corações corrompidos.')">
-                    <img src="jogos/persona5.jpg" alt="Persona 5">
+                <div class="game-card" onclick="selectAnime('Sakamoto Days', 'TMS Entertainment', 'animes/sakamotodays.jpg', 'Um lendário ex-assassino de aluguel tenta viver uma vida tranquila gerenciando uma mercearia.')">
+                    <img src="animes/sakamotodays.jpg" alt="Sakamoto Days">
                 </div>
-                <div class="game-card" onclick="selectGame('Resident Evil 4', 'Capcom', 'jogos/re4.jpg', 'Clássico do survival horror e ação onde Leon investiga um resgate na Europa.')">
-                    <img src="jogos/re4.jpg" alt="Resident Evil 4">
+                <div class="game-card" onclick="selectAnime('Servamp', 'Brain\'s Base', 'animes/servamp.jpg', 'Um estudante forma acidentalmente um contrato com um vampiro preguiçoso chamado Kuro.')">
+                    <img src="animes/servamp.jpg" alt="Servamp">
                 </div>
-                <div class="game-card" onclick="selectGame('Silent Hill f', 'NeoBards Entertainment / Konami', 'jogos/shf.jpg', 'Uma história inédita ambientada no Japão dos anos 1960, com um mundo lindo, porém aterrorizante.')">
-                    <img src="jogos/shf.jpg" alt="Silent Hill f">
+                <div class="game-card" onclick="selectAnime('Shiki', 'Daume', 'animes/shiki.jpg', 'Estranhas mortes começam a assolar uma pequena vila isolada com a chegada de novos moradores.')">
+                    <img src="animes/shiki.jpg" alt="Shiki">
                 </div>
-                <div class="game-card" onclick="selectGame('Siren', 'SCE Japan Studio', 'jogos/siren.jpg', 'Survival horror clássico conhecido por sua atmosfera sombria e mecânica de visão compartilhada.')">
-                    <img src="jogos/siren.jpg" alt="Siren">
+                <div class="game-card" onclick="selectAnime('SK8 the Infinity', 'Bones', 'animes/sk8.jpg', 'Skatistas participam de corridas clandestinas de alto risco conhecidas como S.')">
+                    <img src="animes/sk8.jpg" alt="SK8 the Infinity">
                 </div>
-                <div class="game-card" onclick="selectGame('Tomb Raider', 'Crystal Dynamics', 'jogos/tombraider.jpg', 'Aventura e ação focadas nas origens de Lara Croft e sobrevivência em uma ilha.')">
-                    <img src="jogos/tombraider.jpg" alt="Tomb Raider">
+                <div class="game-card" onclick="selectAnime('Terror in Resonance', 'MAPPA', 'animes/terroriresonance.jpg', 'Dois garotos misteriosos operam sob o nome Sphinx para expor segredos sombrios de Tóquio.')">
+                    <img src="animes/terroriresonance.jpg" alt="Terror in Resonance">
                 </div>
-                <div class="game-card" onclick="selectGame('Uncharted', 'Naughty Dog', 'jogos/uncharted.jpg', 'Jogo de ação e aventura no estilo cinematográfico focado na caça a tesouros perdidos.')">
-                    <img src="jogos/uncharted.jpg" alt="Uncharted">
+                <div class="game-card" onclick="selectAnime('Trigun', 'Madhouse / Orange', 'animes/triguns.jpg', 'Vash the Stampede é um pistoleiro pacifista com uma enorme recompensa por sua cabeça.')">
+                    <img src="animes/triguns.jpg" alt="Trigun">
                 </div>
-                <div class="game-card" onclick="selectGame('ZENO Remake', '旨味まづ', 'jogos/zenoremake.jpg', 'RPG de terror e suspense psicológico com narrativa envolvente.')">
-                    <img src="jogos/zenoremake.jpg" alt="ZENO Remake">
+                <div class="game-card" onclick="selectAnime('Tsurune', 'Kyoto Animation', 'animes/tshd.jpg', 'Jovens do clube de arqueria buscam superar desafios pessoais e alcançar o topo do arquearia kyudo.')">
+                    <img src="animes/tshd.jpg" alt="Tsurune">
+                </div>
+                <div class="game-card" onclick="selectAnime('The Case Study of Vanitas', 'Bones', 'animes/vanitasncarte.jpg', 'Um humano com o Livro de Vanitas se une a um vampiro para curar a maldição que afeta os de sua espécie.')">
+                    <img src="animes/vanitasncarte.jpg" alt="The Case Study of Vanitas">
+                </div>
+                <div class="game-card" onclick="selectAnime('Wind Breaker', 'CloverWorks', 'animes/windbreaker.jpg', 'Estudantes de uma escola de delinquentes usam seus punhos para proteger a cidade.')">
+                    <img src="animes/windbreaker.jpg" alt="Wind Breaker">
+                </div>
+                <div class="game-card" onclick="selectAnime('Yuri!!! on Ice', 'MAPPA', 'animes/yurinoice.jpg', 'Um patinador no gelo busca recuperar sua paixão pelo esporte sob a orientação de um campeão lendário.')">
+                    <img src="animes/yurinoice.jpg" alt="Yuri!!! on Ice">
                 </div>
             </div>
 
             <!-- Painel Lateral -->
             <div class="details-sidebar">
                 <div class="sidebar-box">
-                    <span class="box-label">Jogo Selecionado</span>
-                    <img id="preview-cover" src="jogos/shf.jpg" alt="Capa do Jogo">
-                    <h3 id="game-title">Silent Hill f</h3>
-                    <p id="game-developer">NeoBards Entertainment / Konami</p>
+                    <span class="box-label">Anime Selecionado</span>
+                    <img id="preview-cover" src="animes/bsd.jpg" alt="Capa do Anime">
+                    <h3 id="game-title">Bungou Stray Dogs</h3>
+                    <p id="game-developer">Bones</p>
                 </div>
 
                 <div class="sidebar-box">
                     <span class="box-label">Sobre</span>
-                    <p id="game-description">Uma história inédita ambientada no Japão dos anos 1960, com um mundo lindo, porém aterrorizante.</p>
+                    <p id="game-description">Indivíduos com poderes sobrenaturais baseados em autores famosos resolvem mistérios na Agência de Detetives.</p>
                 </div>
             </div>
         </div>
@@ -378,9 +387,9 @@
     <button id="theme-toggle" class="theme-btn"><i class="fa-solid fa-moon"></i></button>
 
     <script>
-        function selectGame(title, developer, coverUrl, description) {
+        function selectAnime(title, studio, coverUrl, description) {
             document.getElementById('game-title').textContent = title;
-            document.getElementById('game-developer').textContent = developer;
+            document.getElementById('game-developer').textContent = studio;
             document.getElementById('preview-cover').src = coverUrl;
             document.getElementById('game-description').textContent = description;
         }
