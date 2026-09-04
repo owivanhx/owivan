@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jogo que vince gosta</title>
+    <link rel="icon" type="image/x-icon" href="zackchibi.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-body: #ffffff;
+            --bg-window: #ffffff;
+            --bg-card: #f5f5f5;
+            --bg-card-hover: #e8e8e8;
+            --text-main: #333333;
+            --text-date: #888888;
+            --border-color: #e0e0e0;
+            --highlight-bg: #333333;
+            --highlight-text: #ffffff;
+        }
+
+        body.dark-mode {
+            --bg-body: #121212;
+            --bg-window: #1e1e1e;
+            --bg-card: #141414;
+            --bg-card-hover: #282828;
+            --text-main: #e0e0e0;
+            --text-date: #aaaaaa;
+            --border-color: #333333;
+            --highlight-bg: #ffffff;
+            --highlight-text: #121212;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--bg-body);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            transition: background 0.3s ease;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Janela Principal */
+        .window {
+            width: 100%;
+            max-width: 900px;
+            background: var(--bg-window);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .dots { display: flex; gap: 6px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+
+        .back-btn {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 13px;
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: opacity 0.2s ease;
+        }
+
+        .back-btn:hover {
+            opacity: 0.7;
+        }
+
+        .search-bar {
+            background: var(--border-color);
+            margin: 0 auto;
+            padding: 4px 15px;
+            border-radius: 5px;
+            font-size: 11px;
+            width: 40%;
+            color: var(--text-main);
+            text-align: center;
+        }
+
+        /* Layout do Catálogo */
+        .catalog-container {
+            display: flex;
+            gap: 24px;
+            padding: 24px;
+        }
+
+        /* Grade de Jogos */
+        .games-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+            gap: 20px 18px; /* Espaçamento bem definido entre as linhas e colunas */
+            max-height: 440px;
+            overflow-y: auto;
+            padding-right: 12px;
+            box-sizing: border-box;
+        }
+
+        .game-card {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            background-color: var(--bg-card);
+        }
+
+        .game-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .game-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--text-main);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        /* Scrollbar Interna */
+        .games-grid::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .games-grid::-webkit-scrollbar-track {
+            background: var(--bg-card);
+            border-radius: 4px;
+        }
+
+        .games-grid::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        /* Painel Lateral */
+        .details-sidebar {
+            width: 260px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-box {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 14px;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        .box-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-date);
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        #preview-cover {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            background-color: var(--border-color);
+        }
+
+        #game-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin: 0 0 4px 0;
+        }
+
+        #game-developer {
+            font-size: 0.8rem;
+            color: var(--text-date);
+            margin: 0;
+        }
+
+        #game-description {
+            font-size: 0.8rem;
+            color: var(--text-main);
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        .window-footer {
+            text-align: center;
+            padding: 10px 0 15px 0;
+        }
+
+        .footer-badge {
+            display: inline-block;
+            background: var(--border-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+        }
+
+        /* Botão Alternador de Tema */
+        .theme-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            background: var(--bg-window);
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .theme-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .catalog-container {
+                flex-direction: column;
+            }
+
+            .details-sidebar {
+                width: 100%;
+            }
+
+            .games-grid {
+                max-height: 320px;
+            }
+
+            .search-bar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Janela Principal -->
+    <div class="window">
+        <div class="top-bar">
+            <div class="dots">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+            </div>
+            <a href="likes.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
+            <div class="search-bar">www.owiwan.com/games</div>
+        </div>
+
+        <div class="catalog-container">
+            <!-- Grade de Capas dos Jogos -->
+            <div class="games-grid">
+                <div class="game-card" onclick="selectGame('Coldfront', 'racheldrawsthings', 'jogos/coldfront.jpg', 'Visual novel psicológica e jogo de aventura focado em exploração e mistério.')">
+                    <img src="jogos/coldfront.jpg" alt="Coldfront">
+                </div>
+                <div class="game-card" onclick="selectGame('Deadplate', 'Studio investigrave', 'jogos/deadplate.jpg', 'RPG Maker / Visual Novel de suspense que se passa em um restaurante francês nos anos 60.')">
+                    <img src="jogos/deadplate.jpg" alt="Deadplate">
+                </div>
+                <div class="game-card" onclick="selectGame('Detroit: Become Human', 'Quantic Dream', 'jogos/detroit.jpg', 'Jogo de ficção científica interativo centrado nas escolhas de três androides.')">
+                    <img src="jogos/detroit.jpg" alt="Detroit: Become Human">
+                </div>
+                <div class="game-card" onclick="selectGame('Devil May Cry 5', 'Capcom', 'jogos/dmc5.jpg', 'Jogo de ação estilizada e hack and slash frenético com múltiplos personagens jogáveis.')">
+                    <img src="jogos/dmc5.jpg" alt="Devil May Cry 5">
+                </div>
+                <div class="game-card" onclick="selectGame('Final Fantasy XV', 'Square Enix', 'jogos/ff15.jpg', 'RPG de ação em mundo aberto seguindo a jornada do príncipe Noctis e seus amigos.')">
+                    <img src="jogos/ff15.jpg" alt="Final Fantasy XV">
+                </div>
+                <div class="game-card" onclick="selectGame('Final Fantasy VII Remake', 'Square Enix', 'jogos/ff7r.jpg', 'Reimaginação moderna do clássico RPG, combinando combate em tempo real e tático.')">
+                    <img src="jogos/ff7r.jpg" alt="Final Fantasy VII Remake">
+                </div>
+                <div class="game-card" onclick="selectGame('Five Nights at Freddy\'s', 'Scott Cawthon', 'jogos/fnaf.jpg', 'Jogo de sobrevivência e terror psicológico focado em gerenciar câmeras de segurança.')">
+                    <img src="jogos/fnaf.jpg" alt="Five Nights at Freddy's">
+                </div>
+                <div class="game-card" onclick="selectGame('Galerians', 'Polygon Magic / ASCII', 'jogos/galerians.jpg', 'Clássico jogo de survival horror com temática cyberpunk e poderes psíquicos.')">
+                    <img src="jogos/galerians.jpg" alt="Galerians">
+                </div>
+                <div class="game-card" onclick="selectGame('Hades', 'Supergiant Games', 'jogos/hades.jpg', 'Roguelike de ação focado na mitologia grega e em escapar do Submundo.')">
+                    <img src="jogos/hades.jpg" alt="Hades">
+                </div>
+                <div class="game-card" onclick="selectGame('Kingdom Hearts', 'Square Enix', 'jogos/kingdomhearts.jpg', 'RPG de ação e aventura misturando elementos da Disney e da Square Enix.')">
+                    <img src="jogos/kingdomhearts.jpg" alt="Kingdom Hearts">
+                </div>
+                <div class="game-card" onclick="selectGame('Marvel Rivals', 'NetEase Games', 'jogos/marvelrivals.jpg', 'Hero shooter multijogador em terceira pessoa com heróis e vilões da Marvel.')">
+                    <img src="jogos/marvelrivals.jpg" alt="Marvel Rivals">
+                </div>
+                <div class="game-card" onclick="selectGame('Metal Gear Solid V: TPP', 'Kojima Productions', 'jogos/mgs5.jpg', 'Jogo de ação e espionagem tática em mundo aberto com foco em stealth.')">
+                    <img src="jogos/mgs5.jpg" alt="Metal Gear Solid V">
+                </div>
+                <div class="game-card" onclick="selectGame('Mouthwashing', 'Wrong Organ', 'jogos/mouthwashing.jpg', 'Jogo de terror psicológico em primeira pessoa focado na tripulação de uma nave condenada.')">
+                    <img src="jogos/mouthwashing.jpg" alt="Mouthwashing">
+                </div>
+                <div class="game-card" onclick="selectGame('Persona 3', 'Atlus', 'jogos/persona3.jpg', 'RPG com elementos de simulação social centrado no mistério da Hora Sombria.')">
+                    <img src="jogos/persona3.jpg" alt="Persona 3">
+                </div>
+                <div class="game-card" onclick="selectGame('Persona 4', 'Atlus', 'jogos/persona4.jpg', 'RPG de ação, suspense e vida escolar investigando assassinatos na cidade de Inaba.')">
+                    <img src="jogos/persona4.jpg" alt="Persona 4">
+                </div>
+                <div class="game-card" onclick="selectGame('Persona 5', 'Atlus', 'jogos/persona5.jpg', 'RPG elegante focado nos Phantom Thieves roubando corações corrompidos.')">
+                    <img src="jogos/persona5.jpg" alt="Persona 5">
+                </div>
+                <div class="game-card" onclick="selectGame('Resident Evil 4', 'Capcom', 'jogos/re4.jpg', 'Clássico do survival horror e ação onde Leon investiga um resgate na Europa.')">
+                    <img src="jogos/re4.jpg" alt="Resident Evil 4">
+                </div>
+                <div class="game-card" onclick="selectGame('Silent Hill f', 'NeoBards Entertainment / Konami', 'jogos/shf.jpg', 'Uma história inédita ambientada no Japão dos anos 1960, com um mundo lindo, porém aterrorizante.')">
+                    <img src="jogos/shf.jpg" alt="Silent Hill f">
+                </div>
+                <div class="game-card" onclick="selectGame('Siren', 'SCE Japan Studio', 'jogos/siren.jpg', 'Survival horror clássico conhecido por sua atmosfera sombria e mecânica de visão compartilhada.')">
+                    <img src="jogos/siren.jpg" alt="Siren">
+                </div>
+                <div class="game-card" onclick="selectGame('Tomb Raider', 'Crystal Dynamics', 'jogos/tombraider.jpg', 'Aventura e ação focadas nas origens de Lara Croft e sobrevivência em uma ilha.')">
+                    <img src="jogos/tombraider.jpg" alt="Tomb Raider">
+                </div>
+                <div class="game-card" onclick="selectGame('Uncharted', 'Naughty Dog', 'jogos/uncharted.jpg', 'Jogo de ação e aventura no estilo cinematográfico focado na caça a tesouros perdidos.')">
+                    <img src="jogos/uncharted.jpg" alt="Uncharted">
+                </div>
+                <div class="game-card" onclick="selectGame('ZENO Remake', '旨味まづ', 'jogos/zenoremake.jpg', 'RPG de terror e suspense psicológico com narrativa envolvente.')">
+                    <img src="jogos/zenoremake.jpg" alt="ZENO Remake">
+                </div>
+            </div>
+
+            <!-- Painel Lateral -->
+            <div class="details-sidebar">
+                <div class="sidebar-box">
+                    <span class="box-label">Jogo Selecionado</span>
+                    <img id="preview-cover" src="jogos/shf.jpg" alt="Capa do Jogo">
+                    <h3 id="game-title">Silent Hill f</h3>
+                    <p id="game-developer">NeoBards Entertainment / Konami</p>
+                </div>
+
+                <div class="sidebar-box">
+                    <span class="box-label">Sobre</span>
+                    <p id="game-description">Uma história inédita ambientada no Japão dos anos 1960, com um mundo lindo, porém aterrorizante.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="window-footer">
+            <div class="footer-badge">made by owivan</div>
+        </div>
+    </div>
+
+    <!-- Botão de Tema -->
+    <button id="theme-toggle" class="theme-btn"><i class="fa-solid fa-moon"></i></button>
+
+    <script>
+        function selectGame(title, developer, coverUrl, description) {
+            document.getElementById('game-title').textContent = title;
+            document.getElementById('game-developer').textContent = developer;
+            document.getElementById('preview-cover').src = coverUrl;
+            document.getElementById('game-description').textContent = description;
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
