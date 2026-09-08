@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>filmes que vince gosta</title>
+    <link rel="icon" type="image/x-icon" href="zackchibi.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-body: #ffffff;
+            --bg-window: #ffffff;
+            --bg-card: #f5f5f5;
+            --bg-card-hover: #e8e8e8;
+            --text-main: #333333;
+            --text-date: #888888;
+            --border-color: #e0e0e0;
+            --highlight-bg: #333333;
+            --highlight-text: #ffffff;
+        }
+
+        body.dark-mode {
+            --bg-body: #121212;
+            --bg-window: #1e1e1e;
+            --bg-card: #141414;
+            --bg-card-hover: #282828;
+            --text-main: #e0e0e0;
+            --text-date: #aaaaaa;
+            --border-color: #333333;
+            --highlight-bg: #ffffff;
+            --highlight-text: #121212;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--bg-body);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            transition: background 0.3s ease;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Janela Principal */
+        .window {
+            width: 100%;
+            max-width: 900px;
+            background: var(--bg-window);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .dots { display: flex; gap: 6px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+
+        .back-btn {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 13px;
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: opacity 0.2s ease;
+        }
+
+        .back-btn:hover {
+            opacity: 0.7;
+        }
+
+        .search-bar {
+            background: var(--border-color);
+            margin: 0 auto;
+            padding: 4px 15px;
+            border-radius: 5px;
+            font-size: 11px;
+            width: 40%;
+            color: var(--text-main);
+            text-align: center;
+        }
+
+        /* Layout do Catálogo */
+        .catalog-container {
+            display: flex;
+            gap: 24px;
+            padding: 24px;
+        }
+
+        /* Grade de Filmes */
+        .games-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+            gap: 20px 18px;
+            max-height: 440px;
+            overflow-y: auto;
+            padding-right: 12px;
+            box-sizing: border-box;
+        }
+
+        .game-card {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            background-color: var(--bg-card);
+        }
+
+        .game-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .game-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--text-main);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        /* Scrollbar Interna */
+        .games-grid::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .games-grid::-webkit-scrollbar-track {
+            background: var(--bg-card);
+            border-radius: 4px;
+        }
+
+        .games-grid::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        /* Painel Lateral */
+        .details-sidebar {
+            width: 260px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-box {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 14px;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        .box-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-date);
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        #preview-cover {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            background-color: var(--border-color);
+        }
+
+        #game-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin: 0 0 4px 0;
+        }
+
+        #game-developer {
+            font-size: 0.8rem;
+            color: var(--text-date);
+            margin: 0;
+        }
+
+        #game-description {
+            font-size: 0.8rem;
+            color: var(--text-main);
+            line-height: 1.4;
+            margin: 0;
+            white-space: pre-line;
+        }
+
+        .window-footer {
+            text-align: center;
+            padding: 10px 0 15px 0;
+        }
+
+        .footer-badge {
+            display: inline-block;
+            background: var(--border-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+        }
+
+        /* Botão Alternador de Tema */
+        .theme-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            background: var(--bg-window);
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .theme-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .catalog-container {
+                flex-direction: column;
+            }
+
+            .details-sidebar {
+                width: 100%;
+            }
+
+            .games-grid {
+                max-height: 320px;
+            }
+
+            .search-bar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Janela Principal -->
+    <div class="window">
+        <div class="top-bar">
+            <div class="dots">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+            </div>
+            <a href="likes.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
+            <div class="search-bar">www.owiwan.com/filmes</div>
+        </div>
+
+        <div class="catalog-container">
+            <!-- Grade de Capas dos Filmes -->
+            <div class="games-grid">
+                <div class="game-card" onclick="selectMovie('Abracadabra', 'Kenny Ortega', 'filmes/abracadabra.jpg', 'Três bruxas do século XVII são acidentalmente ressuscitadas na noite de Halloween por um adolescente em Salem.')">
+                    <img src="filmes/abracadabra.jpg" alt="Abracadabra">
+                </div>
+                <div class="game-card" onclick="selectMovie('Alice no País das Maravilhas', 'Tim Burton', 'filmes/alice.jpg', 'Alice, agora aos 19 anos, retorna ao mundo mágico de sua infância para descobrir seu verdadeiro destino.')">
+                    <img src="filmes/alice.jpg" alt="Alice no País das Maravilhas">
+                </div>
+                <div class="game-card" onclick="selectMovie('Os Vingadores', 'Joss Whedon', 'filmes/avangers.jpg', 'Os heróis mais poderosos da Terra precisam se unir para combater uma ameaça alienígena liderada por Loki.')">
+                    <img src="filmes/avangers.jpg" alt="Os Vingadores">
+                </div>
+                <div class="game-card" onclick="selectMovie('Operação Big Hero', 'Don Hall & Chris Williams', 'filmes/bighero6.jpg', 'O prodígio da robótica Hiro Hamada se une a um robô inflável chamado Baymax e seus amigos para salvar San Fransokyo.')">
+                    <img src="filmes/bighero6.jpg" alt="Operação Big Hero">
+                </div>
+                <div class="game-card" onclick="selectMovie('Capitão América: Guerra Civil', 'Anthony & Joe Russo', 'filmes/civilwar.jpg', 'O desacordo político sobre o controle dos Vingadores divide a equipe entre o Capitão América e o Homem de Ferro.')">
+                    <img src="filmes/civilwar.jpg" alt="Capitão América: Guerra Civil">
+                </div>
+                <div class="game-card" onclick="selectMovie('Deadpool & Wolverine', 'Shawn Levy', 'filmes/deadpool&wolverine.jpg', 'Deadpool recruta um Wolverine relutante de outro universo para proteger seu mundo de uma ameaça existencial.')">
+                    <img src="filmes/deadpool&wolverine.jpg" alt="Deadpool & Wolverine">
+                </div>
+                <div class="game-card" onclick="selectMovie('Descendentes', 'Kenny Ortega', 'filmes/desendentes.jpg', 'Os filhos dos vilões mais notórios da Disney recebem uma chance de redenção ao frequentarem uma escola comum.')">
+                    <img src="filmes/desendentes.jpg" alt="Descendentes">
+                </div>
+                <div class="game-card" onclick="selectMovie('Doutor Estranho', 'Scott Derrickson', 'filmes/doctorstranger.jpg', 'Após um acidente de carro, um neurocirurgião arrogante aprende as artes místicas para proteger a realidade.')">
+                    <img src="filmes/doctorstranger.jpg" alt="Doutor Estranho">
+                </div>
+                <div class="game-card" onclick="selectMovie('Quarteto Fantástico', 'Tim Story', 'filmes/fantastic4.jpg', 'Quatro astronautas ganham superpoderes extraordinários após serem expostos a uma tempestade de radiação cósmica.')">
+                    <img src="filmes/fantastic4.jpg" alt="Quarteto Fantástico">
+                </div>
+                <div class="game-card" onclick="selectMovie('Five Nights at Freddy\'s', 'Emma Tammi', 'filmes/fnafmovie.jpg', 'Um guarda de segurança noturno descobre o terrível segredo por trás dos bonecos animatrônicos de uma pizzaria abandonada.')">
+                    <img src="filmes/fnafmovie.jpg" alt="Five Nights at Freddy's">
+                </div>
+                <div class="game-card" onclick="selectMovie('Esqueceram de Mim', 'Chris Columbus', 'filmes/homealone.jpg', 'Um garoto de oito anos é esquecido acidentalmente em casa pela família no Natal e precisa defendê-la de ladrões atrapalhados.')">
+                    <img src="filmes/homealone.jpg" alt="Esqueceram de Mim">
+                </div>
+                <div class="game-card" onclick="selectMovie('Harry Potter e a Câmara Secreta', 'Chris Columbus', 'filmes/hpchambersecrect.jpg', 'Harry retorna a Hogwarts para seu segundo ano e investiga ataques misteriosos ligados a uma lenda antiga da escola.')">
+                    <img src="filmes/hpchambersecrect.jpg" alt="Harry Potter e a Câmara Secreta">
+                </div>
+                <div class="game-card" onclick="selectMovie('Homem de Ferro', 'Jon Favreau', 'filmes/ironman.jpg', 'Um empresário bilionário constrói uma armadura de alta tecnologia para combater o crime após ser mantido em cativeiro.')">
+                    <img src="filmes/ironman.jpg" alt="Homem de Ferro">
+                </div>
+                <div class="game-card" onclick="selectMovie('Leviticus', 'Diretor Indefinido', 'filmes/leviticus.jpg', 'Uma trama focada em suspense e mistérios fundamentados em crenças ancestrais.')">
+                    <img src="filmes/leviticus.jpg" alt="Leviticus">
+                </div>
+                <div class="game-card" onclick="selectMovie('Mentes Inquietas', 'Gregory Read', 'filmes/likeminds.jpg', 'Um psicólogo forense investiga o assassinato de um garoto em um colégio interno e a conexão entre dois estudantes prodígios.')">
+                    <img src="filmes/likeminds.jpg" alt="Mentes Inquietas">
+                </div>
+                <div class="game-card" onclick="selectMovie('Matilda', 'Danny DeVito', 'filmes/matilda.jpg', 'Uma garotinha extraordinariamente inteligente com poderes telecinéticos enfrenta seus pais ignorantes e uma diretora cruel.')">
+                    <img src="filmes/matilda.jpg" alt="Matilda">
+                </div>
+                <div class="game-card" onclick="selectMovie('Maze Runner: Correr ou Morrer', 'Wes Ball', 'filmes/mazerunner.jpg', 'Um jovem acorda preso em um labirinto gigante sem memórias e precisa se unir a outros jovens para encontrar uma saída.')">
+                    <img src="filmes/mazerunner.jpg" alt="Maze Runner">
+                </div>
+                <div class="game-card" onclick="selectMovie('Monster', 'Hirokazu Kore-eda', 'filmes/monster.jpg', 'Quando o comportamento de um menino muda drasticamente, sua mãe busca respostas na escola, revelando visões cruzadas sobre a verdade.')">
+                    <img src="filmes/monster.jpg" alt="Monster">
+                </div>
+                <div class="game-card" onclick="selectMovie('Uma Noite no Museu', 'Shawn Levy', 'filmes/nightathemusian.jpg', 'Um guarda noturno de museu descobre que uma antiga maldição egípcia faz com que as exibições ganhem vida à noite.')">
+                    <img src="filmes/nightathemusian.jpg" alt="Uma Noite no Museu">
+                </div>
+                <div class="game-card" onclick="selectMovie('O Estranho Mundo de Jack', 'Henry Selick', 'filmes/nightmare.jpg', 'Jack Skellington, o Rei das Abóboras da Cidade do Halloween, descobre a Cidade do Natal e tenta assumir a festividade.')">
+                    <img src="filmes/nightmare.jpg" alt="O Estranho Mundo de Jack">
+                </div>
+                <div class="game-card" onclick="selectMovie('O Diabo Veste Prada', 'David Frankel', 'filmes/odiabovesteprada.jpg', 'Uma jovem recém-formada consegue um emprego como assistente de uma poderosa e implacável executiva de moda.')">
+                    <img src="filmes/odiabovesteprada.jpg" alt="O Diabo Veste Prada">
+                </div>
+                <div class="game-card" onclick="selectMovie('Sonic 3: O Filme', 'Jeff Fowler', 'filmes/sonic3.jpg', 'Sonic, Tails e Knuckles enfrentam uma nova e poderosa ameaça com a chegada do misterioso Shadow.')">
+                    <img src="filmes/sonic3.jpg" alt="Sonic 3">
+                </div>
+                <div class="game-card" onclick="selectMovie('Homem-Aranha', 'Sam Raimi', 'filmes/spiderman.jpg', 'Após ser picado por uma aranha geneticamente modificada, o jovem Peter Parker ganha superpoderes e aprende sobre responsabilidade.')">
+                    <img src="filmes/spiderman.jpg" alt="Homem-Aranha">
+                </div>
+                <div class="game-card" onclick="selectMovie('Spree', 'Eugene Kotlyarenko', 'filmes/spree.jpg', 'Um motorista de aplicativo obcecado por fama na internet desenvolve um plano sombrio e viral durante suas corridas.')">
+                    <img src="filmes/spree.jpg" alt="Spree">
+                </div>
+                <div class="game-card" onclick="selectMovie('Swing Girls', 'Shinobu Yaguchi', 'filmes/swinggirls.jpg', 'Estudantes preguiçosas do ensino médio no Japão formam uma banda de big band jazz para substituir a banda da escola.')">
+                    <img src="filmes/swinggirls.jpg" alt="Swing Girls">
+                </div>
+                <div class="game-card" onclick="selectMovie('Clube dos Cinco', 'John Hughes', 'filmes/thebreakfastclub.jpg', 'Cinco estudantes do ensino médio com perfis completamente diferentes passam o sábado juntos em detenção escolar e descobrem afinidades.')">
+                    <img src="filmes/thebreakfastclub.jpg" alt="Clube dos Cinco">
+                </div>
+                <div class="game-card" onclick="selectMovie('O Segredo de Brokeback Mountain', 'Ang Lee', 'filmes/thesecretofthebrokebackmountain.jpg', 'Dois vaqueiros desenvolvem um complexo e profundo relacionamento secreto ao longo de décadas nas montanhas de Wyoming.')">
+                    <img src="filmes/thesecretofthebrokebackmountain.jpg" alt="O Segredo de Brokeback Mountain">
+                </div>
+                <div class="game-card" onclick="selectMovie('Garotos Incríveis', 'Curtis Hanson', 'filmes/wonderboys.jpg', 'Um professor universitário de literatura luta para concluir seu segundo romance enquanto lida com crises pessoais em um fim de semana tumultuado.')">
+                    <img src="filmes/wonderboys.jpg" alt="Garotos Incríveis">
+                </div>
+            </div>
+
+            <!-- Painel Lateral -->
+            <div class="details-sidebar">
+                <div class="sidebar-box">
+                    <span class="box-label">Filme Selecionado</span>
+                    <img id="preview-cover" src="filmes/spiderman.jpg" alt="Capa do Filme">
+                    <h3 id="game-title">Homem-Aranha</h3>
+                    <p id="game-developer">Sam Raimi</p>
+                </div>
+
+                <div class="sidebar-box">
+                    <span class="box-label">Sobre</span>
+                    <p id="game-description">Após ser picado por uma aranha geneticamente modificada, o jovem Peter Parker ganha superpoderes e aprende sobre responsabilidade.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="window-footer">
+            <div class="footer-badge">made by owivan</div>
+        </div>
+    </div>
+
+    <!-- Botão de Tema -->
+    <button id="theme-toggle" class="theme-btn"><i class="fa-solid fa-moon"></i></button>
+
+    <script>
+        function selectMovie(title, director, coverUrl, description) {
+            document.getElementById('game-title').textContent = title;
+            document.getElementById('game-developer').textContent = director;
+            document.getElementById('preview-cover').src = coverUrl;
+            document.getElementById('game-description').textContent = description;
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
