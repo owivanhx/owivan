@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>grupos de kpop que vince gosta</title>
+    <link rel="icon" type="image/x-icon" href="WonChu.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-body: #ffffff;
+            --bg-window: #ffffff;
+            --bg-card: #f5f5f5;
+            --bg-card-hover: #e8e8e8;
+            --text-main: #333333;
+            --text-date: #888888;
+            --border-color: #e0e0e0;
+            --highlight-bg: #333333;
+            --highlight-text: #ffffff;
+        }
+
+        body.dark-mode {
+            --bg-body: #121212;
+            --bg-window: #1e1e1e;
+            --bg-card: #141414;
+            --bg-card-hover: #282828;
+            --text-main: #e0e0e0;
+            --text-date: #aaaaaa;
+            --border-color: #333333;
+            --highlight-bg: #ffffff;
+            --highlight-text: #121212;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--bg-body);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            transition: background 0.3s ease;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Janela Principal */
+        .window {
+            width: 100%;
+            max-width: 900px;
+            background: var(--bg-window);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .dots { display: flex; gap: 6px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+
+        .back-btn {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 13px;
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: opacity 0.2s ease;
+        }
+
+        .back-btn:hover {
+            opacity: 0.7;
+        }
+
+        .search-bar {
+            background: var(--border-color);
+            margin: 0 auto;
+            padding: 4px 15px;
+            border-radius: 5px;
+            font-size: 11px;
+            width: 40%;
+            color: var(--text-main);
+            text-align: center;
+        }
+
+        /* Layout do Catálogo */
+        .catalog-container {
+            display: flex;
+            gap: 24px;
+            padding: 24px;
+        }
+
+        /* Grade de Grupos */
+        .games-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+            gap: 20px 18px;
+            max-height: 440px;
+            overflow-y: auto;
+            padding-right: 12px;
+            box-sizing: border-box;
+        }
+
+        .game-card {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            background-color: var(--bg-card);
+        }
+
+        .game-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .game-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--text-main);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        /* Scrollbar Interna */
+        .games-grid::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .games-grid::-webkit-scrollbar-track {
+            background: var(--bg-card);
+            border-radius: 4px;
+        }
+
+        .games-grid::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        /* Painel Lateral */
+        .details-sidebar {
+            width: 260px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-box {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 14px;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        .box-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-date);
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        #preview-cover {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            background-color: var(--border-color);
+        }
+
+        #game-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin: 0 0 4px 0;
+        }
+
+        #game-developer {
+            font-size: 0.8rem;
+            color: var(--text-date);
+            margin: 0;
+        }
+
+        #game-description {
+            font-size: 0.8rem;
+            color: var(--text-main);
+            line-height: 1.4;
+            margin: 0;
+            white-space: pre-line;
+        }
+
+        .window-footer {
+            text-align: center;
+            padding: 10px 0 15px 0;
+        }
+
+        .footer-badge {
+            display: inline-block;
+            background: var(--border-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+        }
+
+        /* Botão Alternador de Tema */
+        .theme-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            background: var(--bg-window);
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .theme-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .catalog-container {
+                flex-direction: column;
+            }
+
+            .details-sidebar {
+                width: 100%;
+            }
+
+            .games-grid {
+                max-height: 320px;
+            }
+
+            .search-bar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Janela Principal -->
+    <div class="window">
+        <div class="top-bar">
+            <div class="dots">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+            </div>
+            <a href="likes.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
+            <div class="search-bar">www.owiwan.com/kpop</div>
+        </div>
+
+        <div class="catalog-container">
+            <!-- Grade de Capas dos Grupos de K-Pop -->
+            <div class="games-grid">
+                <div class="game-card" onclick="selectGroup('BOYNEXTDOOR', 'KOZ Entertainment', 'kpops/boynextdoor.jpg', 'Grupo masculino formado pela KOZ Entertainment com estilo casual e jovem.\n\nIntegrantes: Sungho, Riwoo, Jaehyun, Taesan, Leehan e Woonhak.')">
+                    <img src="kpops/boynextdoor.jpg" alt="BOYNEXTDOOR">
+                </div>
+                <div class="game-card" onclick="selectGroup('Close Your Eyes', 'Independente', 'kpops/closeyoureyes.jpg', 'Projeto ou grupo conceitual do cenário musical.\n\nIntegrantes: Informações sob consulta.')">
+                    <img src="kpops/closeyoureyes.jpg" alt="Close Your Eyes">
+                </div>
+                <div class="game-card" onclick="selectGroup('CORTIS', 'Independente', 'kpops/cortis.jpg', 'Grupo com conceitos visuais e sonoros únicos.\n\nIntegrantes: Informações sob consulta.')">
+                    <img src="kpops/cortis.jpg" alt="CORTIS">
+                </div>
+                <div class="game-card" onclick="selectGroup('CRAVITY', 'Starship Entertainment', 'kpops/cravity.jpg', 'Boy group com performances energéticas e conceito futurista.\n\nIntegrantes: Serim, Allen, Jungmo, Woobin, Wonjin, Minhee, Hyeongjun, Taeyoung e Seongmin.')">
+                    <img src="kpops/cravity.jpg" alt="CRAVITY">
+                </div>
+                <div class="game-card" onclick="selectGroup('Daily Direction', 'Independente', 'kpops/dailydirection.jpg', 'Grupo focado em sonoridade moderna e estilo cotidiano.\n\nIntegrantes: Informações sob consulta.')">
+                    <img src="kpops/dailydirection.jpg" alt="Daily Direction">
+                </div>
+                <div class="game-card" onclick="selectGroup('ENHYPEN', 'BELIFT LAB', 'kpops/enhypen.jpg', 'Grupo formado pelo reality I-LAND com conceito obscuro e envolvente.\n\nIntegrantes: Heeseung, Jay, Jake, Sunghoon, Sunoo, Jungwon e Ni-ki.')">
+                    <img src="kpops/enhypen.jpg" alt="ENHYPEN">
+                </div>
+                <div class="game-card" onclick="selectGroup('ILLIT', 'BELIFT LAB', 'kpops/illit.jpg', 'Girl group do programa R U Next? conhecido pela sonoridade pop encantadora.\n\nIntegrantes: Yunah, Minju, Moka, Wonhee e Iroha.')">
+                    <img src="kpops/illit.jpg" alt="ILLIT">
+                </div>
+                <div class="game-card" onclick="selectGroup('KICKFLIP', 'Independente', 'kpops/kickflip.jpg', 'Grupo com inspiração na cultura de rua e ritmo dinâmico.\n\nIntegrantes: Informações sob consulta.')">
+                    <img src="kpops/kickflip.jpg" alt="KICKFLIP">
+                </div>
+                <div class="game-card" onclick="selectGroup('NCT WISH', 'SM Entertainment', 'kpops/nctwish.jpg', 'Subunidade baseada no Japão e focada em mensagens de esperança.\n\nIntegrantes: Sion, Riku, Yushi, Jaehee, Ryo e Sakuya.')">
+                    <img src="kpops/nctwish.jpg" alt="NCT WISH">
+                </div>
+                <div class="game-card" onclick="selectGroup('NewJeans', 'ADOR', 'kpops/newjeans.jpg', 'Girl group famoso pela estética nostálgica dos anos 2000 e sons R&B pop.\n\nIntegrantes: Minji, Hanni, Danielle, Haerin e Hyein.')">
+                    <img src="kpops/newjeans.jpg" alt="NewJeans">
+                </div>
+                <div class="game-card" onclick="selectGroup('NEXZ', 'JYP Entertainment', 'kpops/nexz.jpg', 'Boy group global formado através do programa Nizi Project Season 2.\n\nIntegrantes: Tomoya, Yu, Haru, So Geon, Seita, Hyui e Yuki.')">
+                    <img src="kpops/nexz.jpg" alt="NEXZ">
+                </div>
+                <div class="game-card" onclick="selectGroup('PLAVE', 'VLAST', 'kpops/plave.jpg', 'Grupo masculino virtual que combina webtoons e captura de movimento em tempo real.\n\nIntegrantes: Yejun, Noah, Bamby, Eunho e Hamin.')">
+                    <img src="kpops/plave.jpg" alt="PLAVE">
+                </div>
+                <div class="game-card" onclick="selectGroup('Stray Kids', 'JYP Entertainment', 'kpops/skz.jpg', 'Boy group autoproduzido amplamente reconhecido por ritmos fortes e originais.\n\nIntegrantes: Bang Chan, Lee Know, Changbin, Hyunjin, Han, Felix, Seungmin e I.N.')">
+                    <img src="kpops/skz.jpg" alt="Stray Kids">
+                </div>
+                <div class="game-card" onclick="selectGroup('TOMORROW X TOGETHER', 'BIGHIT MUSIC', 'kpops/txt.jpg', 'Grupo focado em narrativas conceituais sobre a juventude e amadurecimento.\n\nIntegrantes: Soobin, Yeonjun, Beomgyu, Taehyun e Hueningkai.')">
+                    <img src="kpops/txt.jpg" alt="TXT">
+                </div>
+                <div class="game-card" onclick="selectGroup('XLOV', 'Independente', 'kpops/xlov.jpg', 'Grupo com temática focada em expressões emocionais e Pop contemporâneo.\n\nIntegrantes: Informações sob consulta.')">
+                    <img src="kpops/xlov.jpg" alt="XLOV">
+                </div>
+            </div>
+
+            <!-- Painel Lateral -->
+            <div class="details-sidebar">
+                <div class="sidebar-box">
+                    <span class="box-label">Grupo Selecionado</span>
+                    <img id="preview-cover" src="kpops/skz.jpg" alt="Capa do Grupo">
+                    <h3 id="game-title">Stray Kids</h3>
+                    <p id="game-developer">JYP Entertainment</p>
+                </div>
+
+                <div class="sidebar-box">
+                    <span class="box-label">Sobre</span>
+                    <p id="game-description">Boy group autoproduzido amplamente reconhecido por ritmos fortes e originais.
+
+Integrantes: Bang Chan, Lee Know, Changbin, Hyunjin, Han, Felix, Seungmin e I.N.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="window-footer">
+            <div class="footer-badge">made by owivan</div>
+        </div>
+    </div>
+
+    <!-- Botão de Tema -->
+    <button id="theme-toggle" class="theme-btn"><i class="fa-solid fa-moon"></i></button>
+
+    <script>
+        function selectGroup(title, agency, coverUrl, description) {
+            document.getElementById('game-title').textContent = title;
+            document.getElementById('game-developer').textContent = agency;
+            document.getElementById('preview-cover').src = coverUrl;
+            document.getElementById('game-description').textContent = description;
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
